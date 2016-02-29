@@ -29,7 +29,7 @@ const NAME = 'invoice'
     'font-family': 'Roboto, Ubuntu, Helvetica, Arial, sans-serif',
     'font-size': '13px',
     'line-height': '22px',
-    'border': '1px solid #b9b9b9'
+    'border': '1px solid #ecedee'
   }
 })
 class Invoice extends Component {
@@ -82,7 +82,7 @@ class Invoice extends Component {
       }
     })
 
-    styles.thQty = _.merge({}, styles.th, { textAlign: 'right' })
+    styles.thQuantity = _.merge({}, styles.th, { textAlign: 'right' })
 
     return styles
   }
@@ -124,7 +124,7 @@ class Invoice extends Component {
           <tr style={styles.thead}>
             <th style={styles.th}>Product</th>
             <th style={styles.th}>Price</th>
-            <th style={styles.thQty}>Quantity</th>
+            <th style={styles.thQuantity}>Quantity</th>
           </tr>
         </thead>
         {renderChildren()}
