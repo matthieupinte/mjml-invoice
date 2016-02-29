@@ -1,6 +1,6 @@
 import fs from 'fs'
-import Invoice from './Invoice'
-import InvoiceItem from './InvoiceItem'
+// import Invoice from './Invoice'
+// import InvoiceItem from './InvoiceItem'
 import mjml from '../mjml/lib'
 
 /*
@@ -21,4 +21,4 @@ const htmlOutput = mjml.mjml2html(`<mj-body>
 /*
   Print the responsive HTML generated
 */
-fs.writeFile('output.mjml', htmlOutput);
+fs.writeFile('output.html', htmlOutput);
