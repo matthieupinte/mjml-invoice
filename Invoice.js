@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import _ from 'lodash'
+import numeral from 'numeral'
 import {
   MJMLColumnElement,
   elements,
@@ -36,7 +37,12 @@ class Invoice extends Component {
   constructor(props) {
     super(props)
 
-    this.items = props.mjChildren().filter((child) => child.get('tagName') === 'mj-invoice-item')
+    const format     = this.props.mjAttribute('format')
+    const currencies = format.match(/([^-\d.,])/g)
+
+    this.items    = props.mjChildren().filter((child) => child.get('tagName') === 'mj-invoice-item')
+    this.format   = format.replace(/([^-\d.,])/g, '$')
+    this.currency = (currencies) ? currencies[0] : null
   }
 
   /*
@@ -95,18 +101,22 @@ class Invoice extends Component {
   }
 
   total() {
-    return this.items.reduce((prev, item) => {
-      const unitPrice = parseFloat(item.getIn(['attributes', 'price']))
+    const format   = this.format
+    const currency = this.currency
+    const total    = this.items.reduce((prev, item) => {
+      const unitPrice = parseFloat(numeral().unformat(item.getIn(['attributes', 'price'])))
       const quantity  = parseInt(item.getIn(['attributes', 'quantity']))
 
       return prev + unitPrice * quantity
     }, 0)
+
+    return numeral(total).format(format).replace(/([^-\d.,])/g, currency)
   }
 
   render() {
     const attrs  = this.getAttributes()
     const styles = this.getStyles()
-    const { renderChildren } = this.props
+    const { renderChildren, mjAttribute } = this.props
 
     return (
       <MjTable {...attrs.table}>
