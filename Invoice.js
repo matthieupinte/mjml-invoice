@@ -32,12 +32,12 @@ const NAME = 'invoice'
     'line-height': '22px',
     'border': '1px solid #ecedee',
 
-    'transl': 'name:Name;price:Price;quantity:Quantity'
+    'intl': 'name:Name;price:Price;quantity:Quantity'
   }
 })
 class Invoice extends Component {
 
-  static transl = {
+  static intl = {
     name: 'Name',
     price: 'Price',
     quantity: 'Quantity',
@@ -110,17 +110,17 @@ class Invoice extends Component {
     }
   }
 
-  getTranslations() {
-    const transl = _.cloneDeep(this.constructor.transl)
+  getIntl() {
+    const intl = _.cloneDeep(this.constructor.intl)
     const { mjAttribute } = this.props
 
-    mjAttribute('transl').split(';').forEach((t) => {
+    mjAttribute('intl').split(';').forEach((t) => {
       if (t && t.indexOf(':') != -1) {
         t = t.split(':')
-        transl[t[0].trim()] = t[1].trim()
+        intl[t[0].trim()] = t[1].trim()
       }
     })
-    return transl
+    return intl
   }
 
   total() {
@@ -137,31 +137,28 @@ class Invoice extends Component {
   }
 
   render() {
-    const trls   = this.getTranslations()
+    const intl   = this.getIntl()
     const attrs  = this.getAttributes()
     const styles = this.getStyles()
     const { renderChildren, mjAttribute } = this.props
 
     return (
-      <div>
-        <MjTable {...attrs.table}>
-          <thead>
-            <tr style={styles.thead}>
-              <th style={styles.th}>{trls['name']}</th>
-              <th style={styles.th}>{trls['price']}</th>
-              <th style={styles.thQuantity}>{trls['quantity']}</th>
-            </tr>
-          </thead>
-          {renderChildren()}
-          <tfoot>
-            <tr style={styles.tfoot}>
-              <th style={styles.th} colSpan="2">{trls['total']}</th>
-              <td style={styles.total}>{this.total()}</td>
-            </tr>
-          </tfoot>
-        </MjTable>
-        <MjButton></MjButton>
-      </div>
+      <MjTable {...attrs.table}>
+        <thead>
+          <tr style={styles.thead}>
+            <th style={styles.th}>{intl['name']}</th>
+            <th style={styles.th}>{intl['price']}</th>
+            <th style={styles.thQuantity}>{intl['quantity']}</th>
+          </tr>
+        </thead>
+        {renderChildren()}
+        <tfoot>
+          <tr style={styles.tfoot}>
+            <th style={styles.th} colSpan="2">{intl['total']}</th>
+            <td style={styles.total}>{this.total()}</td>
+          </tr>
+        </tfoot>
+      </MjTable>
     )
   }
 }
