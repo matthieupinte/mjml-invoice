@@ -24,10 +24,11 @@ const NAME = 'invoice'
    * These are your default css attributes
    */
   attributes: {
-    'color': '#747474',
+    'color': '#b9b9b9',
     'font-family': 'Roboto, Ubuntu, Helvetica, Arial, sans-serif',
     'font-size': '13px',
-    'line-height': '22px'
+    'line-height': '22px',
+    'border': '1px solid #b9b9b9'
   }
 })
 class Invoice extends Component {
@@ -44,45 +45,40 @@ class Invoice extends Component {
   getStyles() {
     const { mjAttribute } = this.props
 
-    return _.merge({}, this.constructor.baseStyles, {
+    const styles = _.merge({}, this.constructor.baseStyles, {
       table: {
         color: mjAttribute('color'),
         fontFamily: mjAttribute('font-family'),
         fontSize: mjAttribute('font-size'),
         lineHeight: mjAttribute('line-height')
       },
-      head: {
+      th: {
         padding: '10px 20px',
-        font: '14px Roboto, sans-serif',
+        font: `${mjAttribute('font-size')} ${mjAttribute('font-family')}`,
         fontWeight: 700,
-        lineHeight: 1,
-        color: '#b9b9b9',
+        lineHeight: mjAttribute('line-height'),
         textTransform: 'uppercase',
         textAlign: 'left'
       },
+      thead: {
+        borderBottom: mjAttribute('border')
+      },
+      tfoot: {
+        borderTop: mjAttribute('border')
+      },
       total: {
-        label: {
-          padding: '10px 20px',
-          font: '14px Roboto, sans-serif',
-          fontWeight: 700,
-          lineHeight: 1,
-          color: '#b9b9b9',
-          textTransform: 'uppercase',
-          textAlign: 'left',
-          borderTop: '1px solid #ecedee'
-        },
-        result: {
-          padding: '10px 20px',
-          font: '14px Roboto, sans-serif',
-          fontWeight: 700,
-          lineHeight: 1,
-          color: '#747474',
-          textTransform: 'uppercase',
-          textAlign: 'right',
-          borderTop: '1px solid #ecedee'
-        }
+        padding: '10px 20px',
+        font: `${mjAttribute('font-size')} ${mjAttribute('font-family')}`,
+        fontWeight: 700,
+        lineHeight: mjAttribute('line-height'),
+        textTransform: 'uppercase',
+        textAlign: 'right'
       }
     })
+
+    styles.thQty = _.merge({}, styles.th, { textAlign: 'right' })
+
+    return styles
   }
 
   getAttributes() {
@@ -115,17 +111,17 @@ class Invoice extends Component {
     return (
       <MjTable {...attrs.table}>
         <thead>
-          <tr>
-            <th style={styles.head}>Product</th>
-            <th style={styles.head}>Price</th>
-            <th style={styles.head}>Quantity</th>
+          <tr style={styles.thead}>
+            <th style={styles.th}>Product</th>
+            <th style={styles.th}>Price</th>
+            <th style={styles.thQty}>Quantity</th>
           </tr>
         </thead>
         {renderChildren()}
         <tfoot>
-          <tr>
-            <th style={styles.total.label} colSpan="2">Total: </th>
-            <td style={styles.total.result}>{this.total()}</td>
+          <tr style={styles.tfoot}>
+            <th style={styles.th} colSpan="2">Total: </th>
+            <td style={styles.total}>{this.total()}</td>
           </tr>
         </tfoot>
       </MjTable>
