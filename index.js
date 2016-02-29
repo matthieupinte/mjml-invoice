@@ -10,7 +10,7 @@ const htmlOutput = mjml.mjml2html(`<mj-body>
   <mj-section>
     <mj-column width="100%">
       <mj-invoice format="0.00€" intl="name:Product Name">
-        <mj-invoice-item name="TV" price="549€" quantity="1" color="blue" font-weight="bold" />
+        <mj-invoice-item name="TV" price="549€" quantity="1" />
         <mj-invoice-item name="DVD - Iron Man II" price="22.99€" quantity="2" />
       </mj-invoice>
       <mj-button align="right">See your order</mj-button>
