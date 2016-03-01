@@ -1,6 +1,6 @@
 import fs from 'fs'
-import Invoice from './Invoice'
-import InvoiceItem from './InvoiceItem'
+// import Invoice from './Invoice'
+// import InvoiceItem from './InvoiceItem'
 import mjml from '../mjml/lib'
 
 /*
@@ -13,7 +13,6 @@ const htmlOutput = mjml.mjml2html(`<mj-body>
         <mj-invoice-item name="TV" price="549€" quantity="1" />
         <mj-invoice-item name="DVD - Iron Man II" price="22.99€" quantity="2" />
       </mj-invoice>
-      <mj-button align="right">See your order</mj-button>
     </mj-column>
   </mj-section>
 </mj-body>
